@@ -27,9 +27,9 @@ public class Todo {
     private Member member;
 
 
-    public Todo(String content, boolean isChecked, Member member) {
+    public Todo(String content, Member member) {
         this.content = content;
-        this.isChecked = isChecked;
+        this.isChecked = false;
         this.member = member;
     }
 
