@@ -15,7 +15,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "member_email", columnDefinition = "varchar(30)")
+    @Column(name = "member_email", columnDefinition = "varchar(30)", unique = true)
     private String email;
 
     @Column(name = "member_password", columnDefinition = "varchar(30)")

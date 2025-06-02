@@ -23,6 +23,14 @@ public class MemberRepository {
         return em.find(Member.class, memberId);
     }
 
+    public Member findByEmail(String email) {
+        List<Member> result =  em.createQuery("select m from Member as m where m.email = :member_email", Member.class)
+                .setParameter("member_email", email)
+                .getResultList();
+
+        return result.isEmpty() ? null : result.get(0);
+    }
+
     // 다건 조회 (여러 개의 데이터 조회)
     public List<Member> findAll() {
         return em.createQuery("select m from Member as m", Member.class).getResultList();
