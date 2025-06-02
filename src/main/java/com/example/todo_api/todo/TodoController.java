@@ -1,5 +1,6 @@
 package com.example.todo_api.todo;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<Void> createTodo(@RequestBody TodoCreateRequest request) {
+    public ResponseEntity<Void> createTodo(@RequestBody @Valid TodoCreateRequest request) {
         Long todoId = todoService.createTodo(request.getContent(), request.getMemberId());
         return ResponseEntity.created(URI.create("/todo/" + todoId)).build();
     }
@@ -36,5 +37,17 @@ public class TodoController {
     public ResponseEntity<Void> deleteTodo(@RequestBody TodoDeleteRequest request, @PathVariable(name="todoId") Long todoId) {
         todoService.deleteTodo(request.getMemberId(), todoId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{todoId}/check")
+    public ResponseEntity<Void> checkTodo(@RequestBody TodoCheckRequest request, @PathVariable(name="todoId") Long todoId) {
+        todoService.checkTodo(request.getMemberId(), todoId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{todoId}/uncheck")
+    public ResponseEntity<Void> uncheckTodo(@RequestBody TodoCheckRequest request, @PathVariable(name="todoId") Long todoId) {
+        todoService.uncheckTodo(request.getMemberId(), todoId);
+        return ResponseEntity.ok().build();
     }
 }
