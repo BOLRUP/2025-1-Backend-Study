@@ -44,6 +44,16 @@ public class FollowRepository {
                 .getResultList();
     }
 
+    public Follow findByFolloweeAndFollower(Member followee, Member follower) {
+        List<Follow> result = em.createQuery("select f from Follow f where f.followee = :followee and f.follower = :follower", Follow.class)
+                .setParameter("followee", followee)
+                .setParameter("follower", follower)
+                .getResultList();
+
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+
     // 삭제
     public void deleteById(Long followId) {
         Follow follow = findById(followId);
